@@ -230,6 +230,13 @@
         addi $sp, $sp, 4
         jr $ra
     print_win:    # t6 = 1 or 2
+    	# Print the board's final state.
+    	addi $sp,$sp,-4
+		sw   $ra,0($sp)
+		jal  drawBoard
+		lw   $ra,0($sp)
+		addi $sp,$sp,4
+		
         li $v0, 4
         addi $t7, $zero, 1
         beq $t6, $t7, isX
