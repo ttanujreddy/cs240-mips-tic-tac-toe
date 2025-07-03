@@ -216,9 +216,14 @@
         addi $t0, $t0, 4
         addi $t1, $t1, 1
         blt $t1, 9, draw_loop
-        beq $t9, $zero, no_exit
-        j no_exit
+        bne  $t9, $zero, no_exit
         # draw
+        addi $sp, $sp, -4
+		sw $ra, 0($sp)
+		jal drawBoard
+		lw $ra, 0($sp)
+		addi $sp, $sp, 4
+        
         li $v0, 4
         la $a0, drawMsg
         syscall
@@ -231,11 +236,11 @@
         jr $ra
     print_win:    # t6 = 1 or 2
     	# Print the board's final state.
-    	addi $sp,$sp,-4
-		sw   $ra,0($sp)
-		jal  drawBoard
-		lw   $ra,0($sp)
-		addi $sp,$sp,4
+    	addi $sp, $sp, -4
+		sw $ra, 0($sp)
+		jal drawBoard
+		lw $ra, 0($sp)
+		addi $sp, $sp, 4
 		
         li $v0, 4
         addi $t7, $zero, 1
